@@ -1,8 +1,8 @@
 THIS_FOLDER=$(dirname "$(readlink -f "$0")") # Absolute path to script
 
-VOLUME_NAME=$1
-CONTAINER_VOL_PATH=$2
-PATH_TO_BACKUP_TAR=$(readlink -f "$3")
+VOLUME_NAME=$2
+CONTAINER_VOL_PATH=$3
+PATH_TO_BACKUP_TAR=$(readlink -f "$4")
 RESTORE_COMMAND="tar xvf /backup/$PATH_TO_BACKUP_TAR"
 CLEAN_FOLDER_BEFORE_UNZIP=false
 
