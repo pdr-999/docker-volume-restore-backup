@@ -33,14 +33,9 @@ if [[ -z "$1" || -z "$2" || -z "$3" ]]; then
 fi
 
 if [[ "$1" == "backup" ]]; then
-    # Do something if $3 == 'one'
     bash $THIS_FOLDER/bin/backup-volume.sh $2 $3 $4 $@
-    # Add your commands here
 elif [[ "$1" == "restore" ]]; then
-    # Do something if $3 == 'two'
     bash $THIS_FOLDER/bin/restore-volume.sh $2 $3 $4 $@
-    # Add your commands here
 else
-    # Default case: print --help
     echo "$HELP_MESSAGE"
 fi
