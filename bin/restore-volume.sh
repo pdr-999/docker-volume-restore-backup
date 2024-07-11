@@ -16,6 +16,11 @@ do
 done
 
 
+if ! [ -e "$PATH_TO_BACKUP_TAR" ]; then
+    echo "File $PATH_TO_BACKUP_TAR doesn't exist."
+    exit 1
+fi
+
 if [ "$CLEAN_FOLDER_BEFORE_UNZIP" = true ]; then
     RESTORE_COMMAND="tar -xvf /backup/$PATH_TO_BACKUP_TAR"
 fi
