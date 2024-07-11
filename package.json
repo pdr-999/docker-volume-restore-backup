@@ -1,0 +1,8 @@
+{
+  "name": "@pdr-999/docker-volume-restore-backup",
+  "version": "1.0.0",
+  "description": "Bash commands to restore/backup docker volume",
+  "main": "dvol.sh",
+  "author": "pdr-999",
+  "license": "MIT"
+}
