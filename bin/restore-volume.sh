@@ -22,7 +22,7 @@ if ! [ -e "$PATH_TO_BACKUP_TAR" ]; then
 fi
 
 if [ "$CLEAN_FOLDER_BEFORE_UNZIP" = true ]; then
-    RESTORE_COMMAND="tar -xvf /backup/$PATH_TO_BACKUP_TAR"
+    RESTORE_COMMAND="rm -rf $CONTAINER_VOL_PATH/* && tar -xvf /backup/$PATH_TO_BACKUP_TAR"
 fi
 
 
