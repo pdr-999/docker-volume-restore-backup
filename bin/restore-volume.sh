@@ -5,16 +5,19 @@ CONTAINER_VOL_PATH=$3
 PATH_TO_BACKUP_TAR=$(readlink -f "$4")
 RESTORE_COMMAND="tar xvf /backup/$PATH_TO_BACKUP_TAR"
 CLEAN_FOLDER_BEFORE_UNZIP=false
+FORCE=false
 
 
 for arg in "$@"
 do
     if [ "$arg" = "--clean" ]; then
         CLEAN_FOLDER_BEFORE_UNZIP=true
-        break
+    fi
+
+    if [ "$arg" = "--force" ]; then
+        FORCE=true
     fi
 done
-
 
 if ! [ -e "$PATH_TO_BACKUP_TAR" ]; then
     echo "Backup file doesn't exist"
@@ -47,10 +50,12 @@ if ! [ -z "$CONTAINER_IDS_WITH_THIS_VOLUME" ]; then
         echo "---"
     done 
 
-    read -p "Do you want to continue (y/n)? " answer
+    if [ "$FORCE" = false ]; then
+        read -p "Do you want to continue (y/n)? " answer
 
-    if ! [ "$answer" = "y" ]; then
-        exit 1;
+        if ! [ "$answer" = "y" ]; then
+            exit 1;
+        fi
     fi
 fi
 

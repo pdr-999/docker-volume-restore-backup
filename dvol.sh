@@ -21,7 +21,7 @@ Restore Usage:
 Restore Example:
     Command : bash $0 restore docker-volume-restore-backup_nginx-vol /var/www/html ./backups/nginx-1.tar
 
-    Command : bash $0 restore docker-volume-restore-backup_nginx-vol /var/www/html ./backups/nginx-1.tar --clean
+    Command : bash $0 restore docker-volume-restore-backup_nginx-vol /var/www/html ./backups/nginx-1.tar --clean --force
 
 Restore Options:
     --clean : rm -rf [volume folder in container] before unzipping
