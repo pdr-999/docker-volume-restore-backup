@@ -39,4 +39,5 @@ Command : bash dvol.sh restore docker-volume-restore-backup_nginx-vol /var/www/h
 
 ```
 --clean : rm -rf [volume folder in container] before unzipping
+--force : skip `do you want to stop container` prompt when restoring
 ```
