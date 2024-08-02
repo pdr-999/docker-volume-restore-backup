@@ -3,10 +3,9 @@ THIS_FOLDER=$(dirname "$(readlink -f "$0")") # Absolute path to script
 VOLUME_NAME=$2
 CONTAINER_VOL_PATH=$3
 PATH_TO_BACKUP_TAR=$(readlink -f "$4")
-RESTORE_COMMAND="tar xvf /backup/$PATH_TO_BACKUP_TAR"
+RESTORE_COMMAND="tar xf /backup/$PATH_TO_BACKUP_TAR"
 CLEAN_FOLDER_BEFORE_UNZIP=false
 FORCE=false
-
 
 for arg in "$@"
 do
@@ -25,16 +24,14 @@ if ! [ -e "$PATH_TO_BACKUP_TAR" ]; then
 fi
 
 if [ "$CLEAN_FOLDER_BEFORE_UNZIP" = true ]; then
-    RESTORE_COMMAND="rm -rf $CONTAINER_VOL_PATH/* && tar -xvf /backup/$PATH_TO_BACKUP_TAR"
+    RESTORE_COMMAND="rm -rf $CONTAINER_VOL_PATH/* && $RESTORE_COMMAND"
 fi
-
 
 # Check if volume exists
 if ! docker volume inspect "$VOLUME_NAME" &> /dev/null; then
     echo "Volume $VOLUME_NAME doesn't exist."
     exit 1
 fi
-
 
 CONTAINER_IDS_WITH_THIS_VOLUME=$(docker ps -q --filter "volume=$VOLUME_NAME")
 
@@ -50,6 +47,7 @@ if ! [ -z "$CONTAINER_IDS_WITH_THIS_VOLUME" ]; then
         echo "---"
     done 
 
+    # Prompt if force is unspecified
     if [ "$FORCE" = false ]; then
         read -p "Do you want to continue (y/n)? " answer
 

@@ -4,40 +4,50 @@ Bash scripts to restore / backup docker volumes
 
 ## Docker Volume Backup / Restore
 
-### Backup Usage:
-
 ```
-bash dvol.sh backup [container id or name] [directory of container to zip] (optional)[backup outout]
+This script uses tar to archive files for Docker volumes.
+
+Backup Usage:
+    bash dvol.sh backup [volume name] [volume path] (optional)[backup_output] (optional)[OPTIONS]
+
+Backup Examples:
+    Standard usage:
+    Command : bash dvol.sh backup nginx-vol /var/www/html
+    Output  : ./backup/20240704120857_nginx-vol__var_www_html.tar
+
+    Custom output file name:
+    Command : bash dvol.sh backup nginx-vol /var/www/html ~/nginx-vol.tar
+    Output  : ~/nginx-vol.tar
+
+    Custom output directory:
+    Command : bash dvol.sh backup nginx-vol /var/www/html ~/
+    Output  : ~/20240704120857_nginx-vol__var_www_html.tar
+
+    With different compression format:
+    Command : bash dvol.sh backup nginx-vol /var/www/html --format=gz
+    Output  : ./backups/nginx-vol.tar.gz
+
+Backup Options:
+    --format=[gz,bz2]   : Specify the compression format (default: tar).
+
+Restore Usage:
+    Note: This action will restart containers attached to volume.
+    bash dvol.sh restore [volume_name] [volume_path] [path_to_backup_file] [OPTIONS]
+
+Restore Example:
+    With options:
+    Command : bash dvol.sh restore nginx-vol /var/www/html ./backups/20240704120857_nginx-vol__var_www_html.tar --clean --force
+
+Restore Options:
+    --clean : Remove the existing content at [volume_path] in the container before restoring from the backup.
 ```
 
-#### Backup Example:
+## License
 
-```
-Command : bash dvol.sh backup nginx /var/www/html
-Output : ./backup/20240704120857_nginx.tar
+This project is licensed under the MIT License. See the LICENSE file for details.
 
-Command : bash dvol.sh backup nginx /var/www/html ./backups/nginx.tar
-Output  : ./backups/nginx.tar
-```
+## Author
 
-### Restore Usage:
+Alvareksa A.
 
-(This will stop and start container)
-
-```
-bash dvol.sh restore [volume name] [volume folder in container] [path to backup file] [OPTIONS]
-```
-
-#### Restore Example:
-
-```
-Command : bash dvol.sh restore docker-volume-restore-backup_nginx-vol /var/www/html ./backups/nginx.tar
-Command : bash dvol.sh restore docker-volume-restore-backup_nginx-vol /var/www/html ./backups/nginx.tar --clean
-```
-
-#### Restore Options:
-
-```
---clean : rm -rf [volume folder in container] before unzipping
---force : skip `do you want to stop container` prompt when restoring
-```
+a_adhipramana@yahoo.com
