@@ -64,4 +64,4 @@ fi
 docker run --rm \
     -v $VOLUME_NAME:$VOLUME_PATH \
     -v $BACKUP_FOLDER:/$UUID busybox:1.36.1-musl \
-    tar --create --file="/$UUID/$BACKUP_FILENAME" $FORMAT var/www/html \
+    tar --create --file="/$UUID/$BACKUP_FILENAME" $FORMAT $VOLUME_PATH \
