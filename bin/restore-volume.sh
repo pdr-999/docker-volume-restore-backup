@@ -65,7 +65,7 @@ for CONTAINER_ID in $CONTAINER_IDS_WITH_THIS_VOLUME; do
 done 
 
 # Restore it
-docker run --rm --mount source=$VOLUME_NAME,destination=$CONTAINER_VOL_PATH -v $PATH_TO_BACKUP_TAR:/backup/$PATH_TO_BACKUP_TAR busybox:stable /bin/sh -c "$RESTORE_COMMAND"
+docker run --rm --mount source=$VOLUME_NAME,destination=$CONTAINER_VOL_PATH -v $PATH_TO_BACKUP_TAR:/backup/$PATH_TO_BACKUP_TAR busybox:1.36.1-musl /bin/sh -c "$RESTORE_COMMAND"
 
 # Then Restart it
 for CONTAINER_ID in $CONTAINER_IDS_WITH_THIS_VOLUME; do
