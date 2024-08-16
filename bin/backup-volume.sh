@@ -1,3 +1,4 @@
+#!/bin/bash
 THIS_FOLDER=$(dirname "$(readlink -f "$0")") # Absolute path to script
 
 UUID=$(cat /proc/sys/kernel/random/uuid)
@@ -13,16 +14,28 @@ OUTPUT_FLAG=$4
 CUSTOM_FILENAME=0
 FORMAT_FLAG=""
 
-if ! [ -z "$4" ] && [[ "$4" != -* ]]; then
-    # Use specified custom folder
-    if [[ "${OUTPUT_FLAG: -1}" == */ ]]; then
-        BACKUP_FOLDER="$(readlink -f $OUTPUT_FLAG)"
-        mkdir -p $BACKUP_FOLDER
-    # Use specified custom file name and folder
+# If output flag is set && it's not an [OPTIONS] flag
+if ! [ -z "$OUTPUT_FLAG" ] && [[ "$OUTPUT_FLAG" != -* ]]; then
+    # Check if specified dir/file exists
+    if [ -e "$OUTPUT_FLAG" ]; then
+        # If it's an existing directory
+        if [ -d "$OUTPUT_FLAG" ]; then
+            # Create a backup there with default naming
+            BACKUP_FOLDER="$(readlink -f $OUTPUT_FLAG)"
+        else 
+            echo "Error: Cannot create backup. A file already exist at that location ($OUTPUT_FLAG)."
+            exit 1
+        fi
     else
-        CUSTOM_FILENAME=1
-        BACKUP_FOLDER="$(dirname $OUTPUT_FLAG)"
-        BACKUP_FILENAME="$(basename "$OUTPUT_FLAG")"
+        # It's not an existing directory, but the string is directory-like (ends with /)
+        if [[ "${OUTPUT_FLAG: -1}" == */ ]]; then
+            mkdir -p $OUTPUT_FLAG
+            BACKUP_FOLDER="$(readlink -f $OUTPUT_FLAG)"
+        else
+            CUSTOM_FILENAME=1
+            BACKUP_FOLDER="$(dirname $OUTPUT_FLAG)"
+            BACKUP_FILENAME="$(basename "$OUTPUT_FLAG")"
+        fi
     fi
 fi
 

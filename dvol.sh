@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 THIS_FOLDER="$(dirname "${BASH_SOURCE[0]}")"
 read -d '' HELP_MESSAGE << EOF
